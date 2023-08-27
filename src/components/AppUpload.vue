@@ -29,7 +29,7 @@
           <div
             class="transition-all progress-bar bg-blue-400"
             :class="'bg-blue-500'"
-            :style="{ width: current_progress + '%' }"
+            :style="{ width: upload.current_progress + '%' }"
           ></div>
         </div>
       </div>
@@ -46,7 +46,7 @@ export default {
   data() {
     return {
       is_dragover: false,
-      uploads: [ ]
+      uploads: []
     }
   },
   methods: {
@@ -72,7 +72,8 @@ export default {
           }) - 1
         storeg.on('state_changed', (snapshot) => {
           const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          this.uploads[uploadindex].current_progress = progress
+          console.log('Progress:', progress);
+        this.uploads[uploadindex].current_progress = progress
         })
       })
     }
