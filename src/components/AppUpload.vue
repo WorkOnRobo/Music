@@ -19,16 +19,21 @@
       >
         <h5>Drop your files here</h5>
       </div>
+      <input type="button" @submit="canceled" />
+      <input type="file" multiple @change="upload($event)" />
+      <input type="button" @submit="canceled" />
       <hr class="my-6" />
       <!-- Progess Bars -->
       <div class="mb-4" v-for="upload in uploads" :key="upload.name">
         <!-- File Name -->
-        <div class="font-bold text-sm">{{ upload.name }}</div>
+        <div class="font-bold text-sm" :class="upload.text_class">
+          <i :class="upload.icon"></i> {{ upload.name }}
+        </div>
         <div class="flex h-4 overflow-hidden bg-gray-200 rounded">
           <!-- Inner Progress Bar -->
           <div
-            class="transition-all progress-bar bg-blue-400"
-            :class="'bg-blue-500'"
+            class="transition-all progress-bar"
+            :class="upload.variant"
             :style="{ width: upload.current_progress + '%' }"
           ></div>
         </div>
@@ -38,7 +43,7 @@
 </template>
 
 <script>
-import { storage } from '@/includes/firebase'
+import { storage, auth, songsCollection } from '@/includes/firebase'
 
 export default {
   name: 'AppUpload',
@@ -50,10 +55,15 @@ export default {
     }
   },
   methods: {
+    beforeUnmount() {
+      this.uploads.forEach((upload) => {
+        upload.storeg.cancel()
+      })
+    },
     upload($event) {
       this.is_dragover = false
 
-      const files = [...$event.dataTransfer.files]
+      const files = $event.dataTransfer ? [...$event.dataTransfer.files] : [...$event.target.files]
 
       files.forEach((file) => {
         if (file.type !== 'audio/mpeg') {
@@ -68,13 +78,43 @@ export default {
           this.uploads.push({
             storeg,
             current_progress: 0,
-            name: file.name
+            name: file.name,
+            icon: 'fas fa-spinner fa-spin',
+            text_class: '',
+            variant: 'bg-green-600'
           }) - 1
-        storeg.on('state_changed', (snapshot) => {
-          const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
-          console.log('Progress:', progress);
-        this.uploads[uploadindex].current_progress = progress
-        })
+
+        storeg.on(
+          'state_changed',
+          (snapshot) => {
+            const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+
+            this.uploads[uploadindex].current_progress = progress
+          },
+          (error) => {
+            this.uploads[uploadindex].variant = 'bg-red-500'
+            this.uploads[uploadindex].icon = 'fas fa-times'
+            this.uploads[uploadindex].text_class = 'text-red-500'
+            console.log(error)
+          },
+          async () => {
+            const songs = {
+              uid: auth.currentUser.uid,
+              display_name: auth.currentUser.displayName,
+              original_name: storeg.snapshot.ref.name,
+              modified_name: storeg.snapshot.ref.name,
+              genre: '',
+              comment_count: 0
+            }
+
+            songs.url = await storeg.snapshot.ref.getDownloadURL()
+            await songsCollection.add(songs)
+
+            this.uploads[uploadindex].variant = 'bg-green-500'
+            this.uploads[uploadindex].icon = 'fas fa-check'
+            this.uploads[uploadindex].text_class = 'text-green-500'
+          }
+        )
       })
     }
   }

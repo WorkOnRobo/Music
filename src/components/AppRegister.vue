@@ -206,10 +206,7 @@ export default {
       this.reg_alert_msg = 'Your account has been created'
       this.reg_alert_variant = 'bg-green-700'
       
-      setTimeout(() => {
-        this.Vis(false)
-      }, 4000)
-      window.location.reload()
+     
     }
   }
 }
