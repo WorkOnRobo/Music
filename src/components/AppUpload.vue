@@ -54,6 +54,8 @@ export default {
       uploads: []
     }
   },
+  props: ['addSong'],
+ 
   methods: {
     beforeUnmount() {
       this.uploads.forEach((upload) => {
@@ -108,7 +110,10 @@ export default {
             }
 
             songs.url = await storeg.snapshot.ref.getDownloadURL()
-            await songsCollection.add(songs)
+            const songref = await songsCollection.add(songs)
+            const songSnapshot = await songref.get()
+
+            this.addSong(songSnapshot)
 
             this.uploads[uploadindex].variant = 'bg-green-500'
             this.uploads[uploadindex].icon = 'fas fa-check'
@@ -121,4 +126,3 @@ export default {
 }
 </script>
 
-<style lang="scss" scoped></style>

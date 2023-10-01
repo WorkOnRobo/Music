@@ -3,7 +3,7 @@
   <section class="container mx-auto mt-6">
     <div class="md:grid md:grid-cols-3 md:gap-4">
       <div class="col-span-1">
-        <AppUpload />
+        <AppUpload :addSong="addSong" />
       </div>
       <div class="col-span-2">
         <div class="bg-white rounded border border-gray-200 relative flex flex-col">
@@ -13,10 +13,17 @@
           </div>
           <div class="p-6">
             <!-- Composition Items -->
-            
-           <AppCompositionItem v-for="song in songs" :key="song.docID" :songs="song"/>
 
+            <AppCompositionItem
+              v-for="(song, i) in songs"
+              :key="song.docID"
+              :songs="song"
+              :updateSongs="updateSongs"
+              :index="i"
+              :removeSong="removeSong"
+              :unsavedfunction="unsavedfunction"
 
+            />
           </div>
         </div>
       </div>
@@ -36,26 +43,50 @@ export default {
   components: {
     AppUpload,
     AppCompositionItem
-},
+  },
   data() {
     return {
-      songs: []
+      songs: [],
+      unsaved: false
     }
   },
 
   async created() {
     const snapshot = await songsCollection.where('uid', '==', auth.currentUser.uid).get()
 
-    snapshot.forEach((document) => {
+    snapshot.forEach(this.addSong)
+  },
+
+  methods: {
+    updateSongs(i, values) {
+      this.songs[i].modified_name = values.modified_name
+      this.songs[i].genre = values.genre
+    },
+    removeSong(i) {
+      this.songs.splice(i, 1)
+    },
+    addSong(document) {
       const song = {
         ...document.data(),
         docID: document.id
       }
 
       this.songs.push(song)
-    })
+    },
+    unsavedfunction(value) {
+      this.unsaved = value
+    }
+  },
+  beforeRouteLeave (to, from, next) {
+  if(!this.unsaved)
+  {
+    next()
   }
-
+  else {
+    const leave = confirm('You didnt save you modification , Do you really wanna leave ?')
+    next(leave)
+  }
+  }
   // beforeRouteEnter(to, from, next) {
   //   const store = useUserStore()
 
