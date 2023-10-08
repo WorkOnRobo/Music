@@ -3,12 +3,14 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '@/views/HomeView.vue'
 import AboutView from '@/views/AboutView.vue'
 import ManageView from '@/views/ManageView.vue'
+import SongView from '@/views/SongView.vue'
 import useUserStore from '@/stores/user'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     { path: '/', name: 'home', component: HomeView },
+    { path: '/song/:id', name: 'song', component: SongView },
     { path: '/About', name: 'about', component: AboutView ,  },
 
     {

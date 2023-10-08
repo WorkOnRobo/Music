@@ -1,4 +1,5 @@
 <template>
+  <!-- Introduction  -->
   <section class="mb-8 py-20 text-white text-center relative">
     <div
       class="absolute inset-0 w-full h-full bg-contain introduction-bg z-0"
@@ -21,29 +22,15 @@
       src="/assets/img/introduction-music.png"
     />
   </section>
-
+  <!-- Main Content -->
   <section class="container mx-auto">
     <div class="bg-white rounded border border-gray-200 relative flex flex-col">
       <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200 relative z-10">
-        <span class="card-title">Songs</span>
+        <span class="card-title"> Songs</span>
         <i class="fa fa-headphones-alt float-right text-green-400 text-xl"></i>
       </div>
       <ol id="playlist">
-        <li
-          class="flex justify-between items-center p-3 pl-6 cursor-pointer transition duration-300 hover:bg-gray-50"
-        >
-          <div>
-            <a href="#" class="font-bold block text-gray-600">Song Title</a>
-            <span class="text-gray-500 text-sm">Artist Name</span>
-          </div>
-
-          <div class="text-gray-600 text-lg">
-            <span class="comments">
-              <i class="fa fa-comments text-gray-600"></i>
-              15
-            </span>
-          </div>
-        </li>
+        <AppSongItem v-for="song in songs" :key="song.docID" :song="song" />
         <!-- Repeat for other songs -->
       </ol>
     </div>
@@ -51,10 +38,68 @@
 </template>
 
 <script>
+import AppSongItem from '../components/AppSongItem.vue'
+import { songsCollection } from '@/includes/firebase'
 export default {
   name: 'HomeView',
-  // Other component properties and methods
+  data() {
+    return {
+      songs: [],
+      pendingRequest: false
+    }
+  },
+  components: {
+    AppSongItem
+  },
+
+  async created() {
+    this.CreateSongs()
+    window.addEventListener('scroll', this.handleScroll)
+  },
+  beforeUnmount() {
+    window.removeEventListener('scroll', this.handleScroll)
+  },
+  methods: {
+    handleScroll() {
+      const { scrollTop, offsetHeight } = document.documentElement
+      const { innerHeight } = window
+      const ButtomOfwindow = Math.round(scrollTop) + innerHeight === offsetHeight
+
+      if (ButtomOfwindow) {
+        this.CreateSongs()
+      }
+    },
+    async CreateSongs() {
+      let snapshot
+      const lastSong = this.songs[this.songs.length - 1]
+
+      if (this.pendingRequest) {
+        return
+      }
+
+      this.pendingRequest =true
+
+      if (this.songs.length) {
+        const lastSongId = lastSong.docID
+        snapshot = await songsCollection.orderBy('genre').startAfter(lastSongId).limit(25).get()
+      } else {
+        snapshot = await songsCollection.orderBy('genre').limit(25).get()
+      }
+
+      snapshot.forEach((document) => {
+        const song = {
+          docID: document.id,
+          ...document.data()
+        }
+
+        this.songs.push(song)
+      })
+
+      this.pendingRequest=false
+    }
+  }
 }
+// Other component properties and methods
 </script>
 
 <style scoped>
