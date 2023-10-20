@@ -1,4 +1,5 @@
 <template>
+  <main>
   <!-- Music Header -->
   <section class="w-full mb-8 py-14 text-center text-white relative">
     <div
@@ -8,10 +9,11 @@
     <div class="container mx-auto flex items-center">
       <!-- Play/Pause Button -->
       <button
+      @click.prevent="newsong(song)"
         type="button"
         class="z-50 h-24 w-24 text-3xl bg-white text-black rounded-full focus:outline-none"
       >
-        <i class="fas fa-play"></i>
+        <i class="fas" :class="{ 'fa-play': !playing, 'fa-pause': playing }"></i>
       </button>
       <div class="z-50 text-left ml-8">
         <!-- Song Info -->
@@ -21,11 +23,11 @@
     </div>
   </section>
   <!-- Form -->
-  <section class="container mx-auto mt-6">
+  <section class="container mx-auto mt-6" id="comments">
     <div class="bg-white rounded border border-gray-200 relative flex flex-col">
       <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
         <!-- Comment Count -->
-        <span class="card-title">Comments (15)</span>
+        <span class="card-title"> Comments ({{ song.comment_count }})</span>
         <i class="fa fa-comments float-right text-green-400 text-2xl"></i>
       </div>
       <div
@@ -79,13 +81,16 @@
       </p>
     </li>
   </ul>
+</main>
 </template>
 
 <script>
 import { songsCollection, commentsCollection, auth } from '@/includes/firebase'
-import { mapStores } from 'pinia'
+import { mapStores, mapActions, mapState } from 'pinia'
 import useModalStore from '@/stores/Modal'
 import useUserStore from '@/stores/user'
+import usePlayerStore from '@/stores/Player'
+
 export default {
   name: 'SongView',
 
@@ -111,17 +116,17 @@ export default {
       return
     }
 
-
-    const {sort }  = this.$route.query
+    const { sort } = this.$route.query
 
     this.sort = sort === '1' || sort === '2' ? sort : '1'
-
 
     this.song = docSnapshot.data()
     this.getcomment()
   },
   computed: {
-    ...mapStores(useModalStore, useUserStore),
+    ...mapStores(useModalStore, useUserStore , usePlayerStore),
+    ...mapState(usePlayerStore, ['playing']),
+
     sortedcomment() {
       return this.comments.slice().sort((a, b) => {
         if (this.sort === '1') {
@@ -133,6 +138,8 @@ export default {
     }
   },
   methods: {
+    ...mapActions(usePlayerStore, ['newsong','toggleaudio']),
+
     async commenter(values, { resetForm }) {
       //   if (!auth.currentUser) {
       //     // Handle the case when the user is not authenticated
@@ -154,6 +161,11 @@ export default {
       }
 
       await commentsCollection.add(comment)
+      this.song.comment_count += 1
+      await songsCollection.doc(this.$route.params.id).update({
+        comment_count: this.song.comment_count
+      })
+
       this.getcomment()
       this.comment_in_submittion = false
       this.comment_alert_variant = 'bg-green-600'
@@ -174,19 +186,17 @@ export default {
       })
     }
   },
-  watch : {
-    sort (newVal){
-    if(newVal === this.$route.query.sort ){
-      return
-    }
-      this.$router.push({ 
-        query : {
-          sort : newVal,
+  watch: {
+    sort(newVal) {
+      if (newVal === this.$route.query.sort) {
+        return
+      }
+      this.$router.push({
+        query: {
+          sort: newVal
         }
-        
       })
     }
   }
-  
 }
 </script>
