@@ -3,9 +3,20 @@
   <!-- Introduction  -->
   <section class="mb-8 py-20 text-white text-center relative">
     <div
-      class="absolute inset-0 w-full h-full bg-contain introduction-bg z-0"
-      style="background-image: url('/assets/img/header.png')"
-    ></div>
+      class="absolute inset-0 w-full h-full bg-contain introduction-bg z-0 "
+      style="background-image: url('/assets/img/header.png'); background-size: contain"
+    ><div class="container mx-auto ">
+      <div class="text-white main-header-content ">
+        <br>
+        <h1 class="font-bold text-5xl mb-5">{{ $t('Home.listen') }}</h1>
+        <p class="w-full md:w-8/12 mx-auto ">
+          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus et dolor mollis, congue
+          augue non, venenatis elit. Nunc justo eros, suscipit ac aliquet imperdiet, venenatis et
+          sapien. Duis sed magna pulvinar, fringilla lorem eget, ullamcorper urna.
+        </p>
+      </div>
+    </div>
+    </div>
 
     <div class="container mx-auto">
       <div class="text-white main-header-content">
@@ -26,9 +37,12 @@
   <!-- Main Content -->
   <section class="container mx-auto">
     <div class="bg-white rounded border border-gray-200 relative flex flex-col">
-      <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200 relative z-10">
-        <span class="card-title"> Songs</span>
-        <i class="fa fa-headphones-alt float-right text-green-400 text-xl"></i>
+      <div
+        class="px-6 pt-6 pb-5 font-bold border-b border-gray-200 relative z-10"
+        v-icon-secondary="{ icon2: 'headphones-alt', right: true }"
+      >
+        <span class="card-title"> {{ $t("Home.music") }}</span>
+        <!-- Icon -->
       </div>
       <ol id="playlist">
         <AppSongItem v-for="song in songs" :key="song.docID" :song="song" />
@@ -42,6 +56,7 @@
 <script>
 import AppSongItem from '../components/AppSongItem.vue'
 import { songsCollection } from '@/includes/firebase'
+import iconsecondary from '../directives/iconsecondary'
 export default {
   name: 'HomeView',
   data() {
@@ -49,6 +64,9 @@ export default {
       songs: [],
       pendingRequest: false
     }
+  },
+  directives: {
+    'icon-secondary': iconsecondary
   },
   components: {
     AppSongItem
@@ -79,7 +97,7 @@ export default {
         return
       }
 
-      this.pendingRequest =true
+      this.pendingRequest = true
 
       if (this.songs.length) {
         const lastSongId = lastSong.docID
@@ -97,7 +115,7 @@ export default {
         this.songs.push(song)
       })
 
-      this.pendingRequest=false
+      this.pendingRequest = false
     }
   }
 }

@@ -59,4 +59,5 @@ export default {
   transition: all 0.5s linear;
   opacity: 0;
 }
+
 </style>

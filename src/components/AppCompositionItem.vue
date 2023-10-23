@@ -21,11 +21,11 @@
         v-show="show_alert"
         :class="alert_variant"
       >
-        {{ alert_message }}
+      {{alert_message}}
       </div>
       <vee-form :validation-schema="schema" :initial-values="songs" @submit="edit">
         <div class="mb-3">
-          <label class="inline-block mb-2">Song Title</label>
+          <label class="inline-block mb-2">{{$t("CompositionItem.SongTitle")}}</label>
           <vee-field
             name="modified_name"
             type="text"
@@ -51,7 +51,7 @@
           class="py-1.5 px-3 rounded text-white bg-green-600"
           :disabled="in_submittion"
         >
-          Submit
+          {{$t("CompositionItem.Submit")}}
         </button>
         <button
           type="submit"
@@ -59,7 +59,7 @@
           :disabled="in_submittion"
           @click.prevent="appear = false"
         >
-          Go Back
+        {{$t("CompositionItem.Back")}}
         </button>
       </vee-form>
     </div>
@@ -97,7 +97,7 @@ export default {
       appear: false,
       in_submittion: false,
       show_alert: false,
-      alert_message: 'Please wait ! updating song in progress .',
+      alert_message: this.$t("CompositionItem.msg"),
       alert_variant: 'bg-blue-600',
       schema: {
         modified_name: 'required',
@@ -109,14 +109,14 @@ export default {
     async edit(values) {
       this.in_submittion = true
       this.show_alert = true
-      this.alert_message = 'Please wait ! updating song in progress .'
+      this.alert_message = this.$t("CompositionItem.msg")
       this.alert_variant = 'bg-blue-600'
       try {
         await songsCollection.doc(this.songs.docID).update(values)
       } catch (error) {
         this.in_submittion = false
         this.alert_variant = 'bg-red-600'
-        this.alert_message = 'Something went wrong ! Try again later '
+        this.alert_message = this.$t("CompositionItem.msg2")
         return
       }
       console.log(this.index)
@@ -125,7 +125,7 @@ export default {
       await this.updateSongs(this.index, values)
 
       this.in_submittion = false
-      this.alert_message = 'Succes'
+      this.alert_message = this.$t("CompositionItem.msg3")
       this.alert_variant = 'bg-green-600'
     },
     async deletesong(values) {

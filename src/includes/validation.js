@@ -4,7 +4,7 @@ import {
   defineRule,
   ErrorMessage,
   configure
-} from 'vee-validate'
+} from 'vee-validate';
 
 import {
   required,
@@ -17,54 +17,54 @@ import {
   confirmed,
   alpha,
   is_not
-} from '@vee-validate/rules'
+} from '@vee-validate/rules';
+
+import i18n from '@/includes/i18n'; // Import your i18n instance
 
 export default {
   install(app) {
-    app.component('VeeForm', VeeForm)
-    app.component('VeeField', VeeField)
-    app.component('ErrorMessage', ErrorMessage)
+    app.component('VeeForm', VeeForm);
+    app.component('VeeField', VeeField);
+    app.component('ErrorMessage', ErrorMessage);
 
-    defineRule('required', required)
-    defineRule('tos', required)
-    defineRule('min', min)
-    defineRule('max', max)
-    defineRule('AlphaSpaces', AlphaSpaces)
-    defineRule('email', email)
-    defineRule('min_value', min_value)
-    defineRule('max_value', max_value)
-    defineRule('pass_mismatch', confirmed)
-    defineRule('alpha', alpha)
-    defineRule('is_not', is_not)
-    defineRule('country_excluded', is_not)
+    defineRule('required', required);
+    defineRule('tos', required);
+    defineRule('min', min);
+    defineRule('max', max);
+    defineRule('AlphaSpaces', AlphaSpaces);
+    defineRule('email', email);
+    defineRule('min_value', min_value);
+    defineRule('max_value', max_value);
+    defineRule('pass_mismatch', confirmed);
+    defineRule('alpha', alpha);
+    defineRule('is_not', is_not);
+    defineRule('country_excluded', is_not);
 
     configure({
       generateMessage: (ctx) => {
         const messages = {
-          required: `The field ${ctx.field} is required`,
-          min: `The field ${ctx.field} is less than it suppose`,
-          max: `The field ${ctx.field} is more than it suppose `,
-          AlphaSpaces: `The field ${ctx.field} shouldn only contient alphabitical caracteres `,
-          email: `The field ${ctx.field} should be a valid email`,
-          min_value: `The field ${ctx.field} is too low`,
-          max_value: `The field ${ctx.field} is too high`,
-          pass_mismatch: `The field ${ctx.field} mismatch with password `,
-          is_not: `The field ${ctx.field} can't support this value`,
-          tos: `You must accept the terms `,
-          country_excluded: `The field ${ctx.field} can't accepte this country`
-        }
+          required: i18n.global.t('validation.required', { field: i18n.global.t(ctx.field) }),
+          min: i18n.global.t('validation.min', { field: i18n.global.t(ctx.field) }),
+          max: i18n.global.t('validation.max', { field: i18n.global.t(ctx.field) }),
+          AlphaSpaces: i18n.global.t('validation.AlphaSpaces', { field: i18n.global.t(ctx.field) }),
+          email: i18n.global.t('validation.email', { field: i18n.global.t(ctx.field) }),
+          min_value: i18n.global.t('validation.min_value', { field: i18n.global.t(ctx.field) }),
+          max_value: i18n.global.t('validation.max_value', { field: i18n.global.t(ctx.field) }),
+          pass_mismatch: i18n.global.t('validation.pass_mismatch', { field: i18n.global.t(ctx.field) }),
+          is_not: i18n.global.t('validation.is_not', { field: i18n.global.t(ctx.field) }),
+          tos: i18n.global.t('validation.tos', { field: i18n.global.t('register.accept') }),
+          country_excluded: i18n.global.t('validation.country_excluded', { field: i18n.global.t(ctx.field) }),
+        };
         const message = messages[ctx.rule.name]
           ? messages[ctx.rule.name]
-          : `The field ${ctx.field} is not valid .`
+          : i18n.global.t('validation.default', { field: i18n.global.t(ctx.field) });
 
-        return message
+        return message;
       },
-      validateOnBlur :true ,
-      validateOnChange : true ,
-      validateOnModelUpdate : true,
-      validateOnInput : true,
-    
-
-    })
-  }
-}
+      validateOnBlur: true,
+      validateOnChange: true,
+      validateOnModelUpdate: true,
+      validateOnInput: true,
+    });
+  },
+};

@@ -1,0 +1,88 @@
+{
+  "Auth": {
+    "account": "Your Account",
+    "login": "Login",
+    "register": "Register"
+  },
+  "CompositionItem": {
+    "SongTitle": "Song Title",
+    "Submit": "Submit",
+    "Back": "Go Back",
+    "msg" : "Please wait ! updating song in progress .",
+    "msg2" : " Something went wrong ! Try again later " ,
+    "msg3" : "Succes" 
+  },
+  "Header": {
+    "LogReg": "Login / Register",
+    "Music": "Music",
+    "About": "About",
+    "Logout": "Logout",
+    "Manage": "Manage"
+  },
+  "Login": {
+    "email": "Email",
+    "password": "Password",
+    "msg" : "Please wait , your account is been created .",
+    "msg2" : "Please wait  .", 
+    "msg3" : "Login details are invalid ",
+    "msg4" : "Login succeeded"
+
+  },
+  "Player": {
+    "by": "By"
+  },
+  "register": {
+    "name": "Name",
+    "gender": "Gender",
+    "male": "Male",
+    "female": "Female",
+    "age": "Age",
+    "confirm": "Confirm Password",
+    "country": "Country",
+    "usa": "USA",
+    "mexico": "Mexico",
+    "germany": "Germany",
+    "antartica": "Antarctica",
+    "accept": "I Accept music {0}",
+    "tos": "Terms Of Services"
+  },
+
+  "Home": {
+    "listen": "Listen to Great Music!",
+    "music": "Songs"
+  },
+
+  "Song": {
+    "comment_count": "No comment | 1 comment | {count} comments", 
+    "latest" : "Latest",
+    "oldest" : "Oldest"
+  },
+  "ph": {
+    "name": "Enter Name",
+    "email": "Enter Email"
+  },
+  "validation":
+  {
+    "required": "The field {field} is required",
+    "min": "The field {field} is less than it should be",
+    "max": "The field {field} is more than it should be",
+    "AlphaSpaces": "The field {field} should only contain alphabetical characters",
+    "email": "The field {field} should be a valid email",
+    "min_value": "The field {field} is too low",
+    "max_value": "The field {field} is too high",
+    "pass_mismatch": "The field {field} doesn't match the password",
+    "is_not": "The field {field} can't support this value",
+    "tos": "You must accept the terms",
+    "country_excluded": "The field {field} can't accept this country"
+  },
+  "About" : {
+    "about" : "This is an about page"
+  },
+  "Manage": {
+    "Songs" : "My Songs",
+    "dropbox" : "Drop your files here",
+    "upload" : "Upload",
+    "chose" : "Choose a file"
+  }
+  
+}

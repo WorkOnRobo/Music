@@ -7,33 +7,34 @@
     >
       {{ reg_alert_msg }}
     </div>
-    <vee-form :validation-schema="schema" @submit="register" :initial-values="userdata">
+    <!-- :validation-schema="schema" -->
+    <vee-form  @submit="register" :initial-values="userdata">
       <!-- Name -->
       <div class="mb-3">
-        <label class="inline-block mb-2">Name</label>
+        <label class="inline-block mb-2">{{$t("register.name")}}</label>
         <vee-field
           type="text"
           name="name"
           class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-          placeholder="Enter Name"
+          :placeholder="$t('ph.name')"
         />
         <ErrorMessage class="text-red-600" name="name" />
       </div>
       <!-- Email -->
       <div class="mb-6">
-        <label class="inline-block mb-2">Email</label>
+        <label class="inline-block mb-2">email</label>
         <vee-field
           name="email"
           type="email"
           class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-          placeholder="Enter Email"
+          
         />
         <ErrorMessage class="text-red-600" name="email" />
       </div>
       <!-- Gender -->
 
       <div class="mb-4">
-        <label class="block mb-2">Gender</label>
+        <label class="block mb-2">{{$t("register.gender")}}</label>
         <vee-field name="gender">
           <label class="inline-flex items-center">
             <vee-field
@@ -44,7 +45,7 @@
               v-model="genderr"
               @change="onGenderChange('Male')"
             />
-            <span class="ml-2">Male</span>
+            <span class="ml-2">{{$t("register.male")}}</span>
           </label>
           <label class="inline-flex items-center ml-6">
             <vee-field
@@ -55,34 +56,34 @@
               v-model="genderr"
               @change="onGenderChange('Female')"
             />
-            <span class="ml-2">Female</span>
+            <span class="ml-2">{{$t("register.female")}}</span>
           </label>
         </vee-field>
-        <br>
+        <br />
         <ErrorMessage class="text-red-600" name="gender" />
       </div>
 
       <!-- Age -->
       <div class="mb-3">
-        <label class="inline-block mb-2">Age</label>
+        <label class="inline-block mb-2">{{$t("register.age")}}</label>
         <vee-field
           name="age"
           type="number"
           class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-          placeholder="Age"
+          :placeholder="$t('register.age')"
         />
         <ErrorMessage class="text-red-600" name="age" />
       </div>
       <!-- Password -->
       <div class="mb-3">
-        <label class="inline-block mb-2">Password</label>
+        <label class="inline-block mb-2"></label>
 
         <vee-field name="password" v-slot="{ field, errors }" :bails="false">
           <input
             name="iput"
             type="password"
             class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-            placeholder="Password"
+           
             v-bind="field"
           />
 
@@ -91,27 +92,27 @@
       </div>
       <!-- Confirm Password -->
       <div class="mb-3">
-        <label class="inline-block mb-2">Confirm Password</label>
+        <label class="inline-block mb-2">{{$t("register.confirm")}}</label>
         <vee-field
           name="confirm_password"
           type="password"
           class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-          placeholder="Confirm Password"
+          :placeholder="$t('register.confirm')"
         />
         <ErrorMessage class="text-red-600" name="confirm_password" />
       </div>
       <!-- Country -->
       <div class="mb-3">
-        <label class="inline-block mb-2">Country</label>
+        <label class="inline-block mb-2">{{$t("register.country")}}</label>
         <vee-field
           as="select"
           name="country"
           class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         >
-          <option value="USA">USA</option>
-          <option value="Mexico">Mexico</option>
-          <option value="Germany">Germany</option>
-          <option value="Antartica">Antartica</option>
+          <option value="USA">{{$t("register.usa")}}</option>
+          <option value="Mexico">{{$t("register.mexico")}}</option>
+          <option value="Germany">{{$t("register.germany")}}</option>
+          <option value="Antartica">{{$t("register.antartica")}}</option>
         </vee-field>
         <ErrorMessage class="text-red-600" name="country" />
       </div>
@@ -123,7 +124,9 @@
           class="w-4 h-4 float-left -ml-6 mt-1 rounded"
           value="1"
         />
-        <label class="inline-block">Accept terms of service</label>
+        <i18n-t class="inline-block" keypath="register.accept" tag="label">
+         <a href="#"> {{ $t('register.tos') }} </a>
+        </i18n-t>
       </div>
       <ErrorMessage class="text-red-600" name="tos" />
 
@@ -132,7 +135,7 @@
         class="block w-full bg-purple-600 text-white py-1.5 px-3 rounded transition hover:bg-purple-700"
         :disabled="reg_in_submission"
       >
-        Submit
+      {{$t("CompositionItem.Submit")}}
       </button>
     </vee-form>
   </div>
@@ -147,6 +150,7 @@ export default {
   props: {
     Vis: Function
   },
+ 
   data() {
     return {
       reg_in_submission: false,
@@ -162,7 +166,7 @@ export default {
         age: 'required|min_value:18|max_value:60',
         password: 'required|min:3|max:10|is_not:password',
         confirm_password: 'required|pass_mismatch:@password',
-        country: 'required|country_excluded:Antartica',
+        country: 'required|country_excluded:Antartica,Antarctique,Antarctica',
         tos: 'tos'
       },
 
@@ -178,7 +182,6 @@ export default {
     }),
 
     onGenderChange(selectedGender) {
-    
       this.gender = selectedGender
       this.itschecked = true
     },
@@ -205,8 +208,6 @@ export default {
 
       this.reg_alert_msg = 'Your account has been created'
       this.reg_alert_variant = 'bg-green-700'
-      
-     
     }
   }
 }

@@ -19,6 +19,7 @@
         <!-- Song Info -->
         <div class="text-3xl font-bold">{{ song.modified_name }}</div>
         <div>{{ song.genre }}</div>
+        <div class="song-price"> {{ $n(12, "currency") }}</div>
       </div>
     </div>
   </section>
@@ -27,7 +28,7 @@
     <div class="bg-white rounded border border-gray-200 relative flex flex-col">
       <div class="px-6 pt-6 pb-5 font-bold border-b border-gray-200">
         <!-- Comment Count -->
-        <span class="card-title"> Comments ({{ song.comment_count }})</span>
+        <span class="card-title"> {{ $tc("Song.comment_count",song.comment_count, {count : song.comment_count}) }}</span>
         <i class="fa fa-comments float-right text-green-400 text-2xl"></i>
       </div>
       <div
@@ -53,7 +54,7 @@
             class="py-1.5 px-3 rounded text-white bg-green-600 block"
             :disabled="comment_in_submittion"
           >
-            Submit
+          {{$t("CompositionItem.Submit")}}
           </button>
         </vee-form>
         <!-- Sort Comments -->
@@ -61,8 +62,8 @@
           v-model="sort"
           class="block mt-4 py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
         >
-          <option value="1">Latest</option>
-          <option value="2">Oldest</option>
+          <option value="1">{{$t("Song.latest")}}</option>
+          <option value="2">{{$t("Song.oldest")}}</option>
         </select>
       </div>
     </div>
