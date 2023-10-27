@@ -1,0 +1,87 @@
+{
+  "Auth": {
+    "account": "Votre compte",
+    "login": "Se connecter",
+    "register": "S'inscrire"
+  },
+  "CompositionItem": {
+    "SongTitle": "Titre de la chanson",
+    "Submit": "Soumettre",
+    "Back": "Retourner",
+    "msg" : "S'il vous plaît, attendez ! mise à jour de la chanson en cours.",
+    "msg2" : " Quelque chose s'est mal passé ! Réessayez plus tard" ,
+    "msg3" : "Succès" 
+  },
+  "Header": {
+    "LogReg": "Se connecter / S'inscrire",
+    "Music": "Musique",
+    "About": "à propos",
+    "Logout": "Se déconnecter",
+    "Manage": "Gérer"
+  },
+  "Login": {
+    "email": "E-Mail",
+    "password": "Mot de passe",
+    "msg" : "Veuillez patienter, votre compte est créé.",
+    "msg2" : "S'il vous plaît, attendez  .", 
+    "msg3" : "Les informations de connexion ne sont pas valides",
+    "msg4" : "Connexion réussie"
+  },
+  "Player": {
+    "by": "Par"
+  },
+  "register": {
+    "name": "Nom",
+    "gender": "Genre",
+    "male": "Mâle",
+    "female": "Femelle",
+    "age": "Age",
+    "confirm": "Confirmez le mot de passe",
+    "country": "Pays",
+    "usa": "Etats-Unis",
+    "mexico": "Mexique",
+    "germany": "Allemagne",
+    "antartica": "Antarctique",
+    "accept": "J'accepte  {0}",
+    "tos": "Les conditions d'utilisation"
+  },
+
+  "Home": {
+    "listen": "Ecoutez de la bonne musique !",
+    "music": "Musique"
+  },
+
+  "Song": {
+    "comment_count": "Pas de commentaire | 1 commentaire | {count} commentaires",
+    "latest" : "Dernière",
+    "oldest" : "Plus ancien"
+  },
+  "ph": {
+    "name": "Entrer le Nom",
+    "email": "Entrez l'e-mail"
+  },
+  "validation": 
+  {
+    "required": "Le champ {field} est requis",
+    "min": "Le champ {field} est inférieur à ce qu'il devrait être",
+    "max": "Le champ {field} est supérieur à ce qu'il devrait être",
+    "AlphaSpaces": "Le champ {field} ne devrait contenir que des caractères alphabétiques",
+    "email": "Le champ {field} doit être une adresse e-mail valide",
+    "min_value": "Le champ {field} est trop bas",
+    "max_value": "Le champ {field} est trop élevé",
+    "pass_mismatch": "Le champ {field} ne correspond pas au mot de passe",
+    "is_not": "Le champ {field} ne peut pas prendre en charge cette valeur",
+    "tos": "Vous devez accepter les conditions",
+    "country_excluded": "Le champ {field} ne peut pas accepter ce pays"
+  },
+  "About" : {
+    "about" : "Ceci est une page à propos"
+  },
+  "Manage": {
+    "Songs" : "Mes Chansons",
+    "dropbox" : "Déposez vos fichiers ici",
+    "upload" : "Télécharger",
+    "chose" : "Choisissez un fichier"
+  }
+  
+}
