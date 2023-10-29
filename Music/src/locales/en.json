@@ -8,9 +8,9 @@
     "SongTitle": "Song Title",
     "Submit": "Submit",
     "Back": "Go Back",
-    "msg" : "Please wait ! updating song in progress .",
-    "msg2" : " Something went wrong ! Try again later " ,
-    "msg3" : "Succes" 
+    "msg": "Please wait ! updating song in progress .",
+    "msg2": " Something went wrong ! Try again later ",
+    "msg3": "Succes"
   },
   "Header": {
     "LogReg": "Login / Register",
@@ -22,11 +22,10 @@
   "Login": {
     "email": "Email",
     "password": "Password",
-    "msg" : "Please wait , your account is been created .",
-    "msg2" : "Please wait  .", 
-    "msg3" : "Login details are invalid ",
-    "msg4" : "Login succeeded"
-
+    "msg": "Please wait , your account is been created .",
+    "msg2": "Please wait  .",
+    "msg3": "Login details are invalid ",
+    "msg4": "Login succeeded"
   },
   "Player": {
     "by": "By"
@@ -53,16 +52,15 @@
   },
 
   "Song": {
-    "comment_count": "No comment | 1 comment | {count} comments", 
-    "latest" : "Latest",
-    "oldest" : "Oldest"
+    "comment_count": "No comment | 1 comment | {count} comments",
+    "latest": "Latest",
+    "oldest": "Oldest"
   },
   "ph": {
     "name": "Enter Name",
     "email": "Enter Email"
   },
-  "validation":
-  {
+  "validation": {
     "required": "The field {field} is required",
     "min": "The field {field} is less than it should be",
     "max": "The field {field} is more than it should be",
@@ -75,14 +73,13 @@
     "tos": "You must accept the terms",
     "country_excluded": "The field {field} can't accept this country"
   },
-  "About" : {
-    "about" : "This is an about page"
+  "About": {
+    "about": "This is an about page"
   },
   "Manage": {
-    "Songs" : "My Songs",
-    "dropbox" : "Drop your files here",
-    "upload" : "Upload",
-    "chose" : "Choose a file"
+    "Songs": "My Songs",
+    "dropbox": "Drop your files here",
+    "upload": "Upload",
+    "chose": "Choose a file"
   }
-  
 }
