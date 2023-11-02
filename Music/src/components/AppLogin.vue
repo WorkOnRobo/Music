@@ -9,7 +9,7 @@
   </div>
   <!-- desactivate validation for nnoz to avoid erreur of validation and i18n delete :validation-schema="schema_login"-->
 
-  <vee-form name="log"  @submit="login">
+  <vee-form name="log" :validation-schema="schema_login" @submit="login">
     <!-- Email -->
     <div class="mb-3">
       <label class="inline-block mb-2">email</label>
@@ -17,7 +17,7 @@
         name="email"
         type="email"
         class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-        
+        :placeholder="$t('ph.email')"
       />
       <ErrorMessage class="text-red-600" name="email" />
     </div>
@@ -28,7 +28,7 @@
         <input
           type="password"
           class="block w-full py-1.5 px-3 text-gray-800 border border-gray-300 transition duration-500 focus:outline-none focus:border-black rounded"
-          
+          :placeholder="$t('Login.password')"
           v-bind="field"
         />
         <div class="text-red-600" v-for="error in errors" :key="error">{{ error }}</div>
@@ -54,7 +54,7 @@ export default {
   name: 'AppLogin',
   i18n: {
     messages: {
-      en 
+      en
     }
   },
   props: {

@@ -1,5 +1,5 @@
 import AppSongItem from '@/components/AppSongItem.vue';
-import { RouterLinkStub, shallowMount } from "@vue/test-utils";
+import { RouterLinkStub, shallowMount ,mount} from "@vue/test-utils";
 import { expect } from 'vitest';
 
 describe('AppSongItem', () => {
@@ -20,5 +20,23 @@ describe('AppSongItem', () => {
     })
 const compositionAuthor = wrapper.find('.text-sm')
     expect(compositionAuthor.text()).toBe(song.display_name); // Fix the syntax here
+  })
+  test("render song-id in attributes", () => {
+    const song = {
+      docID : 'abc'  // Provide a string value for display_name
+    }
+
+    const wrapper = shallowMount(AppSongItem, {
+      props: {
+        song,
+      },
+      global: {
+        components: {
+          'router-link': RouterLinkStub
+        }
+      }
+    })
+
+    expect(wrapper.attributes().id).toBe(`song-id-${song.docID}`)
   })
 })
